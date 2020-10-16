@@ -1,47 +1,36 @@
-import React,{ Component } from 'react';
+// 外部ライブラリからのimport
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import store from '../stores/store';
 
-/**
- * Appコンポーネント
- * Counterコンポーネントを返すシンプルなコンポーネント
- */
+// 画面固有のimport
+import { increment, decrement } from '../actions';
 
-const App = () => {
-
-  return (
-    <>
-      <Counter />
-    </>
-  )
-}
-
-/**
- * Counterコンポーネント
- * Appコンポーネントの子供のコンポーネント
- */
-
-class Counter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { count: 0 };
-    }
-
-  handleIncrement = () => {
-    this.setState((state) => { return { count : state.count + 1 }})
-  }
-
-  handleDecrement = () => {
-    this.setState((state) => { return { count : state.count - 1 }})
-  }
-
+class App extends Component {
   render() {
+    const props = this.props;
+
+    store.subscribe(() => {
+      console.log(store.getState());
+    })
+
     return (
       <>
-      <p>count: {this.state.count}</p>
-      <button onClick={this.handleIncrement}>+1</button>
-      <button onClick={this.handleDecrement}>-1</button>
+        <div>count:{props.count}</div>
+        <button onClick={props.increment}>+1</button>
+        <button onClick={props.decrement}>-1</button>
       </>
     )
   }
 }
 
-export default App;
+const mapStateToProps = (state) => { return { count : state.count } }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  increment: () => { dispatch(increment()) },
+  decrement: () => { dispatch(decrement()) }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
