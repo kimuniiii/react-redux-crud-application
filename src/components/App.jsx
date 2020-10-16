@@ -1,52 +1,36 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// 外部ライブラリからのimport
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import store from '../stores/store';
 
-// const App = (props) => {
-//   return (
-//     <>
-//       <User name={'KKK'} age={10} />
-//       <User name={'KK'} age={5} />
-//     </>
-//   )
-// }
+// 画面固有のimport
+import { increment, decrement } from '../actions';
 
-/**
- * Appコンポーネント
- * 上でコメントアウトしたコンポーネントのリファクタリング
- * @param {Object} props
- * @return {Array}
- */
+class App extends Component {
+  render() {
+    const props = this.props;
 
-const App = (props) => {
+    store.subscribe(() => {
+      console.log(store.getState());
+    })
 
-  const profiles = [{name:'KKK',age:42},{name:'KK',age:42},{name:'K'}];
-
-  return (
-    <>
-      {profiles.map((cur,idx) => { return <User key={idx} name={cur.name} age={cur.age} /> })}
-    </>
-  )
+    return (
+      <>
+        <div>count:{props.count}</div>
+        <button onClick={props.increment}>+1</button>
+        <button onClick={props.decrement}>-1</button>
+      </>
+    )
+  }
 }
 
-/**
- * Userコンポーネント
- * Appコンポーネントの子供のコンポーネント
- * @param {Object} props
- * @return JSX
- */
+const mapStateToProps = (state) => { return { count : state.count } }
 
-const User = (props) => {
-  return (
-  <>
-  <h4>{props.name}</h4>
-  <h4>{props.age}</h4>
-  </>
-  )
+const mapDispatchToProps = (dispatch) => {
+  return {
+  increment: () => { dispatch(increment()) },
+  decrement: () => { dispatch(decrement()) }
+  }
 }
 
-User.propTypes = {
-  name: PropTypes.string,
-  age: PropTypes.number.isRequired
-}
-
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
