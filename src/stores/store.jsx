@@ -1,6 +1,10 @@
-import { createStore } from 'redux';
-import Counter from '../reducers/count';
+// 外部ライブラリからimport
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk'
 
-const store = createStore(Counter);
+// 画面固有のimport
+import eventsReducer from '../reducers/events-reducer'
+
+const store = createStore(eventsReducer, applyMiddleware(thunk));
 
 export default store;
