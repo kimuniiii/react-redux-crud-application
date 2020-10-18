@@ -7,11 +7,11 @@ import { Provider } from 'react-redux';
 import store from './stores/store';
 
 // 画面固有のimport
-import App from './components/App';
+import EventsIndex from './components/EventsIndex';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <EventsIndex />
   </Provider>,
   document.getElementById('root')
 );
