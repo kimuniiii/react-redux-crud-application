@@ -1,6 +1,10 @@
-// import { combineReducers } from 'redux';
-// import Counter from './count';
+// 外部ライブラリからのimport
+import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form'
 
-// const reducer = combineReducers({ Counter });
+// 画面固有のimport
+import eventsReducer from '../reducers/events-reducer'
 
-// export default reducer;
+const reducer = combineReducers({ eventsReducer, form: formReducer });
+
+export default reducer;

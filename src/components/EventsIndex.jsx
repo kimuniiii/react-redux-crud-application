@@ -2,9 +2,7 @@
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-
-// 共通実装のimport
-import store from '../stores/store';
+import { Link } from 'react-router-dom';
 
 // 画面固有のimport
 import readEvents from '../actions/events-index'
@@ -46,6 +44,8 @@ class EventsIndex extends Component {
           </tbody>
 
         </table>
+
+        <Link to='events/new/'>Events New</Link>
       </>
     )
   }
@@ -54,9 +54,9 @@ class EventsIndex extends Component {
 const mapStateToProps = (events) => { return { events } }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-  readEvents() { dispatch(readEvents()) },
-  }
+  return ({
+  readEvents : () => { dispatch(readEvents()) },
+  })
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventsIndex);
